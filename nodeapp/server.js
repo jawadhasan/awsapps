@@ -1,8 +1,11 @@
 const http = require('http');
 const port = process.env.PORT || 3000;
 
+let counter = 0;
 const requestListner = (req, res)=> {
-    res.end('Hello world');
+	counter += 1;
+	let now = new Date().toString();
+    res.end(`Hello world from NodeJS APP! ${now}`);
 }
 //Notice, a function reference is passed not a function call
 //const server = http.createServer(requestListner);
