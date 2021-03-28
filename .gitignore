@@ -27,7 +27,7 @@ obj/
 Obj/
 
 .vscode/
-wwwroot/
+netcoreapppublish/
 
 node_modules
 
