@@ -9,9 +9,63 @@ var app = function(){
 		document.getElementById("counterDiv").innerHTML = counter;		
 
 	}
+
+	
+	function getWeatherData(){
+		
+			clearOutput();
+		
+		$.ajax({
+		  url: "http://18.196.23.241/netcoreapp/weatherforecast/",
+		  type: 'GET',
+		  success: function(data){
+				  
+				 console.log(data);
+				 $('pre').html(JSON.stringify(data, undefined, 2));				
+			  },
+			  
+			error: function(data){
+				console.log(data);
+				 $('pre').html(JSON.stringify(data, undefined, 2));	
+			},
+		  dataType: 'json'
+		});
+	}
+	
+	
+	function clearOutput(){
+		$('pre').html('');
+		$('pre').html('Loading....');
+	}
+	
+		function getWeatherDataPrivate(){
+		
+		clearOutput();	
+		
+		$.ajax({
+		  url: "http://10.0.2.136:5000/weatherforecast/",
+		  type: 'GET',
+		  success: function(data){				 		 
+				 console.log(data);
+				 $('pre').html(JSON.stringify(data, undefined, 2));				
+			  },
+		error: function(data){
+			console.log(data);
+			 $('pre').html(JSON.stringify(data, undefined, 2));	
+		},
+		  dataType: 'json'
+		});
+	}
+	
+	
+	
+	
 	
 	return {
-		start:start
+		start:start,
+		getWeatherData:getWeatherData,
+		getWeatherDataPrivate:getWeatherDataPrivate
+		
 	}
    
 }();

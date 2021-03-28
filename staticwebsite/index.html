@@ -5,15 +5,50 @@
 	<body>
 		<h1>Hello World! - Static WebSite</h1>
 		
+		
+		<div>
+		<button id="btnTimer">Start Timer</button>
 		<div>Counter: <span id="counterDiv"></span></div>
 		<span id="targetDiv"></span>
+		<div></div>
+		</div>
 		
+		
+		
+		
+		<div>
+		<button id="btnAjax">Ajax Call from public nginx</button>
+		<button id="btnAjaxPrivate">Ajax Call from private EC2</button>
+		
+		<pre></pre>
+		</div>
+		
+     		
+		
+
+
+		
+		
+		
+	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 	<script>
 		
-	   setInterval(()=>{			
-			app.start();
-		},1000);
+	  function startTimer(){
+			setInterval(()=>{			
+					app.start();
+				},1000);
+	  }
+		
+		$( document ).ready(function() {
+			console.log( "ready!" );
+						
+			$( "#btnTimer" ).on( "click", startTimer );
+			$( "#btnAjax" ).on( "click", app.getWeatherData);
+			$( "#btnAjaxPrivate" ).on( "click", app.getWeatherDataPrivate);
+			
+		});
+		
 	</script>
 	</body>
 </html>
