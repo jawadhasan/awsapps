@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DotnetcoreApp
 {
@@ -26,6 +27,22 @@ namespace DotnetcoreApp
         {
             services.AddCors();
             services.AddControllers();
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options => {
+                    options.IncludeErrorDetails = true;
+                    options.Authority = Environment.GetEnvironmentVariable("Authority");
+                    options.RequireHttpsMetadata = false;
+                    options.Audience = "api1";
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        ValidIssuer = Environment.GetEnvironmentVariable("Authority"),
+                        //NameClaimType = JwtClaimTypes.Name,
+                        //RoleClaimType = JwtClaimTypes.Role,
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +56,7 @@ namespace DotnetcoreApp
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+
             app.UseRouting();
 
             // global cors policy
@@ -46,6 +64,9 @@ namespace DotnetcoreApp
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
